@@ -35,10 +35,26 @@ class Player {
     });
   }
 
+  update() {
+    var playerIndex = "players/player" + this.index;
+    database.ref(playerIndex).update({
+      positionX: this.positionX,
+      positionY: this.positionY
+    });
+  }
+
   static getPlayersInfo() {
     var playerInfoRef = database.ref("players");
     playerInfoRef.on("value", data => {
-      allPlayers = data.val()
-    })
+      allPlayers = data.val();
+    });
+  }
+  getDistance(){
+    var playerDisanceRef = database.ref("players/player"+this.index);
+    playerDisanceRef.on("value",data => {
+      var data = data.val();
+      this.positionX = data.positionX;
+      this.positionY = data.positionY;
+    });
   }
 }
